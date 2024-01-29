@@ -1,0 +1,254 @@
+html * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  *, *:after, *:before {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-size: 100%;
+    font-family: 'PT Sans', sans-serif;
+    color: #505260;
+    background-color: #fff;
+  }
+  
+  a {
+    color: #2f889a;
+    text-decoration: none;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  input, textarea {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 16px;
+  
+    &::-ms-clear {
+      display: none;
+    }
+  }
+  
+  header[role=banner] {
+    position: relative;
+    height: 50px;
+    background: #343642;
+  
+    #cd-logo {
+      float: left;
+      margin: 4px 0 0 5%;
+      transform-origin: 0 50%;
+      transform: scale(0.8);
+  
+      img {
+        display: block;
+      }
+    }
+  
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  
+    @media only screen and (min-width: 768px) {
+      height: 80px;
+  
+      #cd-logo {
+        margin: 20px 0 0 5%;
+        transform: scale(1);
+      }
+    }
+  }
+  
+  .main-nav {
+    float: right;
+    margin-right: 5%;
+    width: 44px;
+    height: 100%;
+    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-menu.svg') no-repeat center center;
+    cursor: pointer;
+  
+    ul {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transform: translateY(-100%);
+  
+      &.is-visible {
+        transform: translateY(50px);
+      }
+    }
+  
+    a {
+      display: block;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 5%;
+      background: #2f889a;
+      border-top: 1px solid #d2d8d8;
+      color: #FFF;
+    }
+  
+    @media only screen and (min-width: 768px) {
+      width: auto;
+      height: auto;
+      background: none;
+      cursor: auto;
+  
+      ul {
+        position: static;
+        width: auto;
+        transform: translateY(0);
+  
+        &.is-visible {
+          transform: translateY(0);
+        }
+      }
+  
+      li {
+        display: inline-block;
+        margin-left: 1em;
+  
+        &:nth-last-child(2) {
+          margin-left: 2em;
+        }
+      }
+  
+      a {
+        display: inline-block;
+        height: auto;
+        line-height: normal;
+        background: transparent;
+  
+        &.cd-signin,
+        &.cd-signup {
+          padding: .6em 1em;
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          border-radius: 50em;
+        }
+  
+        &.cd-signup {
+          background: #2f889a;
+          border: none;
+        }
+      }
+    }
+  }
+  
+  .cd-user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 54, 66, 0.9);
+    z-index: 3;
+    overflow-y: auto;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  
+    &.is-visible {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.3s 0s, visibility 0s 0s;
+  
+      .cd-user-modal-container {
+        transform: translateY(0);
+      }
+    }
+  }
+  
+  .cd-user-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: #FFF;
+    margin: 3em auto 4em;
+    cursor: auto;
+    border-radius: 0.25em;
+    transform: translateY(-30px);
+    transition: transform 0.3s;
+  
+    .cd-switcher {
+      &:after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+  
+      li {
+        float: left;
+        text-align: center;
+  
+        &:first-child a {
+          border-radius: 0.25em 0 0 0;
+        }
+  
+        &:last-child a {
+          border-radius: 0 0.25em 0 0;
+        }
+      }
+  
+      a {
+        display: block;
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background: #d2d8d8;
+        color: darken(#d2d8d8, 30%);
+  
+        &.selected {
+          background: #FFF;
+          color: #505260;
+        }
+      }
+    }
+  
+    @media only screen and (min-width: 768px) {
+      margin: 4em auto;
+  
+      .cd-switcher a {
+        height: 70px;
+        line-height: 70px;
+      }
+    }
+  }
+  
+  .cd-form {
+    padding: 1.4em;
+  
+    .fieldset {
+      position: relative;
+      margin: 1.4em 0;
+  
+      &:first-child {
+        margin-top: 0;
+      }
+  
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  
+    label {
+      font-size: 14px;
+  
+      &.image-replace {
+        display: inline-block;
+        position: absolute;
+        left: 15px;
+        @include center(y);
+        height: 20px;
+        width: 20px;
+        overflow: hidden;
+        text-indent: 100%;
+        white-space: nowrap;
+        color: transparent
+  
