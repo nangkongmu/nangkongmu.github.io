@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>유튜브 채널이랑께</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    #container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #channelInfo {
+      margin-bottom: 30px;
+    }
+
+    #channelInfo h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    #channelInfo p {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    #channelInfo ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #channelInfo li {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 5px;
+    }
+
+    #channelThumbnail {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #channelThumbnail img {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 50%;
+    }
+
+    #averageDuration p {
+      font-size: 16px;
+      color: #666;
+    }
+
+    #channelLink {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #channelLink a {
+      font-size: 16px;
+      color: #fff;
+      text-decoration: none;
+      background-color: #17971c;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    #channelLink a:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <h1>Youtube 채널 정보</h1>
+  <div id="channelInfo"></div>
+  <div id="averageDuration"></div>
+  <div id="channelLink"></div>
+</div>
+
+<script>
+
+  const API_KEY = 'AIzaSyAd5vG1kNOQSE86T63iG2-cchMfWgV3nHg';
+// 채널의 정보 가져오기
+function getChannelInfo(channelId) {
+  fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key=${API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      const channel = data.items[0];
+      const channelInfoElement = document.getElementById('channelInfo');
+  const subscriberCount = parseInt(channel.statistics.subscriberCount, 10);
+  const tierText = getTier(subscriberCount);
+  const channelStats = channel.statistics;
+
+  const category = channel.snippet.categoryId;
+
+
+      channelInfo.innerHTML = `
+        <div id="channelThumbnail">
+          <img src="${channel.snippet.thumbnails.high.url}" alt="${channel.snippet.title}">
+        </div>
+        <h2>${channel.snippet.title}</h2>
+        <p>${channel.snippet.description}</p>
+        <ul>
+          <li>구독자 수: ${subscriberCount}</li>
+          <li>총 비디오 수: ${channel.statistics.videoCount}</li>
+          <li>총 조회수: ${channel.statistics.viewCount}</li>
+          <li>등급: ${tierText}</li>
+        </ul>`;
+
+      // 최신 동영상 조회수 가져오고 출력하기
+      getLatestVideoViews(channelId);
+      
+      // 평균 동영상 길이 가져오고 출력하기
+      getAverageVideoDuration(channelId);
+    })
+    .catch(error => console.error('Error fetching channel info:', error));
+}
+
+// 채널의 최신 동영상 조회수 가져오기
+function getLatestVideoViews(channelId) {
+  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=1&order=date&type=video&key=${API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      const latestVideoId = data.items[0].id.videoId;
+      fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${latestVideoId}&key=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+          const views = data.items[0].statistics.viewCount;
+          const channelInfo = document.getElementById('channelInfo');
+          channelInfo.innerHTML += `<p>최신 동영상 조회수: ${views}</p>`;
+        })
+        .catch(error => console.error('Error fetching latest video views:', error));
+    })
+    .catch(error => console.error('Error fetching latest video:', error));
+}
+
+// 채널의 평균 동영상 길이 계산
+function getAverageVideoDuration(channelId) {
+  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=50&order=date&type=video&key=${API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      const videos = data.items;
+      let totalDuration = 0;
+      let videoCount = 0;
+
+      videos.forEach(video => {
+        const videoId = video.id.videoId;
+        fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${API_KEY}`)
+          .then(response => response.json())
+          .then(data => {
+            const duration = durationToSeconds(data.items[0].contentDetails.duration);
+            totalDuration += duration;
+            videoCount++;
+
+            // 모든 동영상의 길이를 더한 후 평균 계산
+            if (videoCount === videos.length) {
+              const averageDurationMinutes = (totalDuration / videoCount) / 60;
+              const channelInfo = document.getElementById('channelInfo');
+              channelInfo.innerHTML += `<p>평균 동영상 길이: ${averageDurationMinutes.toFixed(2)} 분</p>`;
+            }
+          })
+          .catch(error => console.error('Error fetching video duration:', error));
+      });
+    })
+    .catch(error => console.error('Error fetching videos:', error));
+}
+
+function getTier(subscriberCount){
+  if (subscriberCount >= 10000 && subscriberCount < 20000) {
+    return 'a';
+  } else if (subscriberCount >= 20000) {
+    return 's';
+  } else {
+    return '';
+  }
+}
+
+// ISO 8601 형식의 시간을 초로 변환하는 함수
+function durationToSeconds(duration) {
+  const timeFormat = duration.slice(2);
+  const hms = {'H': 3600, 'M': 60, 'S': 1};
+  let seconds = 0;
+
+  for (const key in hms) {
+    if (timeFormat.includes(key)) {
+      const [time] = timeFormat.split(key);
+      seconds += parseInt(time, 10) * hms[key];
+    }
+  }
+
+  return seconds;
+}
+
+// 페이지 로드 시 채널 정보 가져오기
+window.onload = function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const channelId = urlParams.get('channelId');
+  getChannelInfo(channelId);
+  document.getElementById('channelLink').innerHTML = `<a href="https://www.youtube.com/channel/${channelId}" target="_blank">채널로 이동하기</a>`;
+};
+
+</script>
+
+</body>
+</html>

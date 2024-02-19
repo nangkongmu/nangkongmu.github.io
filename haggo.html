@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하꼬 페이지</title>
+<style>
+  /* 전체 페이지 스타일 */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+
+  /* 헤더 스타일 */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* 본문 컨테이너 스타일 */
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 하꼬 입력 폼 스타일 */
+  .hakko-form {
+    margin-bottom: 20px;
+  }
+
+  /* 하꼬 입력 폼 필드 스타일 */
+  .hakko-form input[type="text"],
+  .hakko-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  /* 하꼬 입력 버튼 스타일 */
+  .hakko-form input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* 하꼬 목록 스타일 */
+  .hakko-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* 하꼬 항목 스타일 */
+  .hakko-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>하꼬 페이지</h1>
+</header>
+
+<div class="container">
+  <!-- 하꼬 입력 폼 -->
+  <form class="hakko-form">
+    <input type="text" name="name" placeholder="이름">
+    <textarea name="content" placeholder="하꼬 내용"></textarea>
+    <input type="submit" value="하꼬 남기기">
+  </form>
+
+  <!-- 하꼬 목록 -->
+  <ul class="hakko-list">
+    <!-- 하꼬 항목 -->
+    <li class="hakko-item">
+      <strong>홍길동</strong>
+      <p>안녕하세요. 하꼬 페이지에 오신 것을 환영합니다!</p>
+    </li>
+    <!-- 추가적인 하꼬 항목을 원하면 여기에 추가할 수 있습니다 -->
+  </ul>
+</div>
+
+</body>
+</html>

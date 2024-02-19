@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>커뮤니티 페이지</title>
+<style>
+  /* 전체 페이지 스타일 */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+
+  /* 헤더 스타일 */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* 본문 컨테이너 스타일 */
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 글쓰기 폼 스타일 */
+  .write-form {
+    margin-bottom: 20px;
+  }
+
+  /* 글쓰기 폼 필드 스타일 */
+  .write-form input[type="text"],
+  .write-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  /* 글쓰기 버튼 스타일 */
+  .write-form input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* 글 목록 스타일 */
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* 글 항목 스타일 */
+  .post-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+
+  /* 작성자 정보 스타일 */
+  .post-author {
+    font-weight: bold;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>커뮤니티 페이지</h1>
+</header>
+
+<div class="container">
+  <!-- 글쓰기 폼 -->
+  <form class="write-form">
+    <input type="text" name="author" placeholder="작성자">
+    <textarea name="content" placeholder="내용"></textarea>
+    <input type="submit" value="글쓰기">
+  </form>
+
+  <!-- 글 목록 -->
+  <ul class="post-list">
+    <!-- 글 항목 -->
+    <li class="post-item">
+      <div class="post-author">홍길동</div>
+      <div class="post-content">
+        <p>안녕하세요. 커뮤니티 페이지에 오신 것을 환영합니다!</p>
+      </div>
+    </li>
+    <!-- 추가적인 글 항목을 원하면 여기에 추가할 수 있습니다 -->
+  </ul>
+</div>
+
+</body>
+</html>
